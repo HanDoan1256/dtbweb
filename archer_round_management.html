@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Archer & Round Management</title>
+  <link rel="stylesheet" href="styles.css">
+  <script type="module" src="supabase.js"></script>
+</head>
+<body>
+  <nav>
+    <img src="logo.png" alt="Logo" class="logo">
+    <a href="recorder_dashboard.html">Dashboard</a>
+    <a href="archer_round_management.html" class="active">Archers & Rounds</a>
+    <a href="competition_management.html">Competitions</a>
+    <a href="equivalent_rounds_management.html">Equivalent Rounds</a>
+    <a href="equipment_class_management.html">Equipment & Class</a>
+    <a href="index.html">Logout</a>
+  </nav>
+
+  <main>
+    <h1>Archer & Round Management</h1>
+    <form>
+      <h2>Add New Archer</h2>
+      <label>Name:</label><input type="text">
+      <label>DOB:</label><input type="date">
+      <label>Gender:</label>
+      <select><option>Male</option><option>Female</option></select>
+      <button>Add Archer</button>
+    </form>
+  </main>
+</body>
+</html>
