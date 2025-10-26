@@ -1,0 +1,370 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Archer — Dashboard</title>
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font: 16px/1.5 system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+            color: #222;
+            background: #fff;
+            padding: 16px;
+            display: grid;
+            place-items: center;
+        }
+
+        .card {
+            width: min(720px, 92vw);
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            padding: 16px;
+            display: grid;
+            gap: 16px;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 700;
+        }
+
+        .logo {
+            width: 28px;
+            height: 28px;
+            display: grid;
+            place-items: center;
+        }
+
+        .lead {
+            color: #555;
+            margin: 0;
+        }
+
+        .note {
+            color: #666;
+        }
+
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background: #f7f7f7;
+            font-weight: 600;
+        }
+
+            .btn:hover {
+                background: #efefef;
+            }
+
+        .quick {
+            display: grid;
+            gap: 8px;
+        }
+
+        .row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        @media (max-width: 560px) {
+            .row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="Home.html">Home</a> |
+            <a href="#dashboard">Dashboard</a> |
+            <a href="#practice-score">Practice Score</a> |
+            <a href="#my-scores">My Scores</a> |
+            <a href="#competition-results">Competition Results</a> |
+            <a href="#personal-bests">Personal Bests</a> |
+            <a href="#round-info">Round Info Lookup</a> |
+            <a href="#profile">Profile</a>
+        </nav>
+    </header>
+
+    <main>
+        <section id="dashboard" aria-labelledby="dash-title">
+            <h1 id="dash-title">Archer Dashboard</h1>
+            <h2>View Summary</h2>
+            <ul>
+                <li>Recent Scores: 604 (WA70/122, 2025-10-21)</li>
+                <li>PBs: 632 (Portsmouth, Recurve)</li>
+            </ul>
+
+            <h2>Quick Access</h2>
+            <ul>
+                <li><a href="#enter-practice-score">Enter Practice Score</a></li>
+                <li><a href="#my-scores">My Scores</a></li>
+                <li><a href="#round-info">Round Info Lookup</a></li>
+            </ul>
+        </section>
+
+        <section id="practice-score" aria-labelledby="eps-title">
+            <h1 id="eps-title">Enter Practice Score</h1>
+            <ol>
+                <li>
+                    <strong>Step 1: Select Round</strong>
+                    <div>
+                        <label for="eps-round">Round:</label>
+                        <select id="eps-round" name="round">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                        </select>
+                    </div>
+                </li>
+                <li>
+                    <strong>Step 2: Select Equipment</strong>
+                    <div>
+                        <label for="eps-equip">Equipment:</label>
+                        <select id="eps-equip" name="equipment">
+                            <option>Recurve</option>
+                            <option>Compound</option>
+                            <option>Barebow</option>
+                            <option>Longbow</option>
+                        </select>
+                    </div>
+                </li>
+                <li>
+                    <strong>Step 3: Set Date &amp; Time</strong>
+                    <div>
+                        <label for="eps-date">Date:</label>
+                        <input type="date" id="eps-date" />
+                        <label for="eps-time">Time:</label>
+                        <input type="time" id="eps-time" />
+                    </div>
+                </li>
+                <li>
+                    <strong>Step 4: Enter Scores (easiest)</strong>
+                    <p>Type the total for each end (e.g., up to 60 for 6 arrows). The grand total updates automatically.</p>
+
+                    <table id="endsTable" border="1" cellpadding="6">
+                        <thead>
+                            <tr><th>End</th><th>End total</th></tr>
+                        </thead>
+                        <tbody id="endsBody">
+                            <tr><td>E1</td><td><input type="number" min="0" max="10" oninput="recalc()"></td></tr>
+                            <tr><td>E2</td><td><input type="number" min="0" max="10" oninput="recalc()"></td></tr>
+                            <tr><td>E3</td><td><input type="number" min="0" max="10" oninput="recalc()"></td></tr>
+                            <tr><td>E4</td><td><input type="number" min="0" max="10" oninput="recalc()"></td></tr>
+                            <tr><td>E5</td><td><input type="number" min="0" max="10" oninput="recalc()"></td></tr>
+                            <tr><td>E6</td><td><input type="number" min="0" max="10" oninput="recalc()"></td></tr>
+                            <tr><td>E7</td><td><input type="number" min="0" max="10" oninput="recalc()"></td></tr>
+                            <tr><td>E8</td><td><input type="number" min="0" max="10" oninput="recalc()"></td></tr>
+                            <tr><td>E9</td><td><input type="number" min="0" max="10" oninput="recalc()"></td></tr>
+                            <tr><td>E10</td><td><input type="number" min="0" max="10" oninput="recalc()"></td></tr>
+                           
+                        </tbody>
+                    </table>
+
+                    <p>
+                        <button type="button" onclick="clearEnds()">Clear</button>
+                    </p>
+
+                    <p>Total: <strong id="grandTotal">0</strong></p>
+
+                    <script>
+                        function recalc() {
+                            let total = 0;
+                            document.querySelectorAll('#endsBody input[type="number"]').forEach(inp => {
+                                const v = parseInt(inp.value, 10);
+                                if (!isNaN(v)) total += v;
+                            });
+                            document.getElementById('grandTotal').textContent = String(total);
+                        }
+
+                        function clearEnds() {
+                            document.querySelectorAll('#endsBody input[type="number"]').forEach(inp => inp.value = '');
+                            recalc();
+                        }
+                    </script>
+                </li>
+
+            </ol>
+        </section>
+
+        <section id="my-scores" aria-labelledby="scores-title">
+            <h1 id="scores-title">My Scores</h1>
+
+            <h2>Filter</h2>
+            <form>
+                <label for="filter-round">Round:</label>
+                <select id="filter-round">
+                    <option>Any</option>
+                    <option>WA70/122</option>
+                    <option>Portsmouth</option>
+                    <option>WA1440</option>
+                </select>
+
+                <label for="from-date">From:</label>
+                <input type="date" id="from-date" />
+                <label for="to-date">To:</label>
+                <input type="date" id="to-date" />
+                <button type="button">Apply</button>
+            </form>
+
+            <h2>Sort</h2>
+            <form>
+                <label><input type="radio" name="sort" checked /> By Date</label>
+                <label><input type="radio" name="sort" /> By Total Score</label>
+            </form>
+
+            <h2>View Status</h2>
+            <ul>
+                <li>Pending</li>
+                <li>Approved</li>
+                <li>Rejected</li>
+            </ul>
+
+            <h2>Sample List</h2>
+            <table border="1" cellpadding="6">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Round</th>
+                        <th>Equipment</th>
+                        <th>Total</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>2025-10-21</td><td>WA70/122</td><td>Recurve</td><td>604</td><td>Approved</td></tr>
+                    <tr><td>2025-10-14</td><td>Portsmouth</td><td>Recurve</td><td>632</td><td>Approved</td></tr>
+                    <tr><td>2025-10-05</td><td>70m Practice</td><td>Recurve</td><td>590</td><td>Pending</td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="competition-results" aria-labelledby="comp-title">
+            <h1 id="comp-title">Competition Results</h1>
+            <h2>View All Competitions</h2>
+            <p>List of competitions (name, date) — placeholder.</p>
+
+            <h2>See Ranks &amp; Scores</h2>
+            <p>View competition results and link to your submitted scores — placeholder.</p>
+        </section>
+
+ 
+        <section id="personal-bests" aria-labelledby="pb-title">
+            <h1 id="pb-title">Personal Bests</h1>
+            <ul>
+                <li>Show highest score (max total) per round</li>
+                <li>Compare with Club Best</li>
+            </ul>
+            <table border="1" cellpadding="6">
+                <thead>
+                    <tr>
+                        <th>Round</th>
+                        <th>Your PB</th>
+                        <th>Club Best</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Portsmouth</td><td>632</td><td>655</td></tr>
+                    <tr><td>WA70/122</td><td>604</td><td>645</td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="round-info" aria-labelledby="round-title">
+            <h1 id="round-title">Round Info Lookup</h1>
+
+            <h2>Select Round → Show:</h2>
+            <form>
+                <label for="ri-round">Round:</label>
+                <select id="ri-round">
+                    <option>WA70/122</option>
+                    <option>Portsmouth</option>
+                    <option>WA1440</option>
+                </select>
+                <button type="button">Show Info</button>
+            </form>
+
+            <h3>Details</h3>
+            <ul>
+                <li>Distances</li>
+                <li>Number of Ends</li>
+                <li>Target Face</li>
+            </ul>
+
+            <h3>Option</h3>
+            <p>Show Equivalent Rounds (placeholder)</p>
+        </section>
+
+        <section id="profile" aria-labelledby="profile-title">
+            <h1 id="profile-title">Profile</h1>
+            <form>
+                <fieldset>
+                    <legend>Edit Name, DOB, Gender</legend>
+                    <label for="name">Name:</label>
+                    <input id="name" type="text" placeholder="Full name" /><br />
+
+                    <label for="dob">DOB:</label>
+                    <input id="dob" type="date" /><br />
+
+                    <label for="gender">Gender:</label>
+                    <select id="gender">
+                        <option>Prefer not to say</option>
+                        <option>Female</option>
+                        <option>Male</option>
+                        <option>Non-binary</option>
+                        <option>Other</option>
+                    </select>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Change Default Equipment</legend>
+                    <label for="def-equip">Default Equipment:</label>
+                    <select id="def-equip">
+                        <option>Recurve</option>
+                        <option>Compound</option>
+                        <option>Barebow</option>
+                        <option>Longbow</option>
+                    </select>
+                </fieldset>
+
+                <button type="button">Save Profile</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>© <span id="year"></span> Archery Score</p>
+    </footer>
+
+    <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>
