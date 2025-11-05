@@ -7,42 +7,25 @@
     <link rel="stylesheet" type="text/css" href="styles/style.css">
 </head>
 
+
 <body>
-    <?php include 'header.inc'; ?>
-<section id="profile" aria-labelledby="profile-title">
-  <h1 id="profile-title">Profile</h1>
-  <form>
-    <fieldset>
-      <legend>Edit Name, DOB, Gender</legend>
-      <label for="name">Name:</label>
-      <input id="name" type="text" placeholder="Full name" /><br />
+<?php include 'header.inc'; ?>
 
-      <label for="dob">DOB:</label>
-      <input id="dob" type="date" /><br />
+<?php
+session_start();
+$name      = $_SESSION['name']      ?? '—';
+$dob       = $_SESSION['dob']       ?? '—';
+$gender    = $_SESSION['gender']    ?? '-';
+$equipment = $_SESSION['def_equip'] ?? '-';
+function e($s){ return htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8'); }
+?>
 
-      <label for="gender">Gender:</label>
-      <select id="gender">
-        <option>Prefer not to say</option>
-        <option>Female</option>
-        <option>Male</option>
-        <option>Non-binary</option>
-        <option>Other</option>
-      </select>
-    </fieldset>
-
-    <fieldset>
-      <legend>Change Default Equipment</legend>
-      <label for="def-equip">Default Equipment:</label>
-      <select id="def-equip">
-        <option>Recurve</option>
-        <option>Compound</option>
-        <option>Barebow</option>
-        <option>Longbow</option>
-      </select>
-    </fieldset>
-
-    <button type="button">Save Profile</button>
-  </form>
+<section id="profile">
+  <h1>Profile</h1>
+  <p><strong>Name:</strong> <?= e($name) ?></p>
+  <p><strong>DOB:</strong> <?= e($dob) ?></p>
+  <p><strong>Gender:</strong> <?= e($gender) ?></p>
+  <p><strong>Default Equipment:</strong> <?= e($equipment) ?></p>
 </section>
 
 <?php include 'footer.inc'; ?>
